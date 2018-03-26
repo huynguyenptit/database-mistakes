@@ -3,7 +3,6 @@
 
 _nguồn https://stackoverflow.com/questions/621884/database-development-mistakes-made-by-application-developers_
 
-**1. Not using appropriate indices**
 **1. Không sử dụng các chỉ số thích hợp**
 
 Đây là điều khá đơn giản nhưng nó vẫn xảy ra mọi lúc. Các khóa ngoại nên có các indexs. Nếu bạn đang sử dụng một trường trong một lệnh WHERE thì bạn nên (hoặc có thể) có một index trong câu lệnh này. Các chỉ mục như vậy thường bao gồm nhiều cột dựa trên các truy vấn bạn cần thực hiện
@@ -12,50 +11,48 @@ _nguồn https://stackoverflow.com/questions/621884/database-development-mistake
 
 Cơ sở dữ liệu của bạn có thể thay đổi, nhưng nếu cơ sở dữ liệu của bạn hỗ trợ tham chiếu toàn vẹn- có nghĩa là tất cả các khóa ngoại phải được đảm bảo luôn tham chiếu đến một thưc thể nào đó đã tồn tại--bạn nên dùng nó.
 
-Điều này được thấy khá phổ biến trong cơ sở dữ liệu MySql. Tôi không tin là MyISAM hỗ trợ nó. Bạn sẽ không thể biết được ai đang sử dụng MyISAM hay InnoDB.
+Dễ dàng có thể thấy được sự thiếu xót trên cơ sở dữ liệu MySQL. Tôi không nghĩ rằng MyISAM hỗ trợ điều này. InnoDB thì lại có. Bạn sẽ thấy được những ai dùng MyISAM hoặc InnoDB nhưng lại không sử dụng nó trong bất kì hoàn cảnh nào.
 
  Xem thêm tại đây:
 
-- [How important are constraints like NOT NULL and FOREIGN KEY if I’ll always control my database input with php?](https://stackoverflow.com/questions/382309/how-important-are-constraints-like-not-null-and-foreign-key-if-ill-always-contr)
-- [Are foreign keys really necessary in a database design?](https://stackoverflow.com/questions/18717/are-foreign-keys-really-necessary-in-a-database-design)
-- [Are foreign keys really necessary in a database design?](http://www.diovo.com/2008/08/are-foreign-keys-really-necessary-in-a-database-design/)
+- [Những khó khăn như NOT NULL và FOREIGN KEY nghiêm trọng như thế nào nếu tôi luôn luôn kiểm soát đầu vào cơ sở dữ liệu của mình bằng PHP](https://stackoverflow.com/questions/382309/how-important-are-constraints-like-not-null-and-foreign-key-if-ill-always-contr)
+- [Có phải những khóa ngoại thực sự quan trọng trong thiết kế cơ sở dữ liệu?](https://stackoverflow.com/questions/18717/are-foreign-keys-really-necessary-in-a-database-design)
 
 **3. Sử dụng các khóa chính thay mặt thay vì các khóa chính tự nhiên **
 
-Các natural key là những khóa trên cơ sở các dữ liệu duy nhất có nghĩa bên ngoài. Các ví dụ điển hình là các mã sản phẩm, 2 chữ cái mã tiểu bang (US), mã số bảo mật mạng xã hội, vân vân,...Các khóa chính kỹ thuật và các khóa chính tự nhiên hoàn toàn không có ý nghĩa bên ngoài hệ thống của ta. Chúng được tạo ra hoàn toàn để xác định thực thể và thông thường các trường (trong SQL Server, MySQL, ...) hoặc chuỗi (trong Oracle) tự động tăng giá trị  hoặc các trình tự (nhất là Oracle).
+Các natural key là những khóa trên cơ sở các dữ liệu duy nhất có nghĩa bên ngoài. Các ví dụ điển hình là các mã sản phẩm, 2 chữ cái mã tiểu bang (US), mã số bảo mật mạng xã hội, vân vân,...Các khóa chính kỹ thuật và các khóa chính tự nhiên hoàn toàn không có ý nghĩa bên ngoài hệ thống. Chúng được tạo ra hoàn toàn để xác định thực thể và thông thường các trường auto-incrementing (trong SQL Server, MySQL, ...) hoặc chuỗi (trong Oracle) tự động tăng giá trị  hoặc các trình tự (nhất là Oracle).
 
-Theo ý kiến của tôi thì bạn nên **luôn luôn ** sử dụng các khóa kỹ thuật, vấn đề này được đề ra trong những câu hỏi dưới đây:
+Theo quan điểm của tôi, bạn hãy **luôn luôn** sử dụng Surrogate Keys. Vấn đề này đã được đưa ra trong những câu hỏi sau:
 
-- [How do you like your primary keys?](https://stackoverflow.com/questions/404040/how-do-you-like-your-primary-keys)
-- [What's the best practice for primary keys in tables?](https://stackoverflow.com/questions/337503/whats-the-best-practice-for-primary-keys-in-tables)
-- [Which format of primary key would you use in this situation.](https://stackoverflow.com/questions/506164/which-format-of-primary-key-would-you-use-in-this-situation)
+- [Bạn thích Primary keys của bạn như thế nào?](https://stackoverflow.com/questions/404040/how-do-you-like-your-primary-keys)
+- [Cách thực hành tốt nhất về Primary Key trong các bảng](https://stackoverflow.com/questions/337503/whats-the-best-practice-for-primary-keys-in-tables)
+- [Bạn sử dụng định dạng khoá chính nào trong trường hợp này.](https://stackoverflow.com/questions/506164/which-format-of-primary-key-would-you-use-in-this-situation)
 - [Surrogate vs. natural/business keys](https://stackoverflow.com/questions/63090/surrogate-vs-natural-business-keys)
-- [Should I have a dedicated primary key field?](https://stackoverflow.com/questions/166750/should-i-have-a-dedicated-primary-key-field)
+- [Liệu tôi có nên một trường dành riêng cho Primary Key?](https://stackoverflow.com/questions/166750/should-i-have-a-dedicated-primary-key-field)
 
-Đây là một chủ đề gây nhiều tranh cãi mà sẽ không nhận được sự đồng tình của tất cả mọi người. Trong khi bạn có thể thấy có người nghĩ là sử dụng các khóa tự nhiên trong một vài trường hợp là OK nhưng bạn sẽ không tìm thấy bất kỳ ý kiến nào cho rằng các khóa tự nhiên là không cần thiết. Nếu bạn hỏi tôi thì đó là một nhược điểm khá nhỏ.
+Đó là một vài chủ đề gây tranh cãi, ở đó bạn sẽ không nhận được toàn thể những đồng thuận. Trong khi bạn có thể thấy vài người nghĩ rằng Natural Key là ổn trong một vài trường hợp, bạn sẽ không tìm thấy bất kì sự chê bai nào về Surrogate Keys khác hơn là việc nó được cho là không cần thiết. Nó sẽ là một nhược điểm nhỏ nếu bạn hỏi tôi.
 
-Hãy nhớ rằng các quốc gia cũng có thể không tồn tại (ví dụ Yugoslavia).
+Nhớ rằng, thậm trí [Các quốc gia có thể biến mất](http://en.wikipedia.org/wiki/ISO_3166-1) (ví dụ như, Yugoslavia)
 
-**4. Viết các truy vấn yêu cầu
+**4. Viết các truy vấn yêu cầu DISTINCT để thực hiện công việc**
 
-DISTINCT để thực hiện công việc**
-
-Bạn thường gặp nó trong các truy vấn được tạo bởi ORM. Hãy xem phần log của Hibernate và bạn sẽ thấy tất cả các truy vấn đều bắt đầu với
+Bạn thường thấy điều này trong các truy vấn được tạo bởi ORM. Nhìn vào những đầu ra log từ Hibernate và bạn sẽ thấy tất cả những truy vấn bắt đầu từ:
 
 SELECT DISTINCT ..
 
-Điều này ngắn gọn là để đảm bảo bạn không lấy ra các bản ghi giống nhau dẫn tới việc lấy ra các đối tượng bị sao chép. Đôi khi bạn sẽ thấy mọi người đang làm điều này tất tốt. Nếu bạn xem nó quá nhiều thì nó là một lá cờ đỏ thực sự. Điều đó không có nghĩa là DISTINCT là không tốt hay không có các ứng dụng hợp lệ. Nó đều bao gồm cả 2 mặt nhứng không phải là câu lệnh 
+Đây là một cách viết để đảm bảo rằng bạn không phải nhận những dữ liệu trùng lặp (các đối tượng trùng lặp). Đôi lúc bạn sẽ thấy người ta làm điều này khá tốt. Nếu bạn thấy điều này quá nhiều thì thực ra nó chỉ là một cái cờ để đánh dấu. Chứ không phải DISTINCT không tốt hoặc giá trị không hợp lệ
+Nó là như vậy nhưng không phải là một **Surrogate** hoặc một **Stopgap** cho việc viết đúng các câu truy vấn.
 
-DISTINCT is bad or doesn't have valid applications. It does (on both counts) but it's not a surrogate or a stopgap for writing correct queries.
+Nguồn từ [Tại sao tôi ghét DISTINCT](http://weblogs.sqlteam.com/markc/archive/2008/11/11/60752.aspx)
 
-Lấy từ [Why I Hate DISTINCT](http://weblogs.sqlteam.com/markc/archive/2008/11/11/60752.aspx):
-> Lúc mà có nhiều thứ trở nên không đúng là lúc mà 1 nhà phát triển đang xây dựng các truy vấn lồng nhau, join các bảng với nhau, và đột nhiên ông nhận ra rằng có vẻ như ông đang nhận được các bản ghi lặp lại (hoặc thậm chí nhiều hơn) và phản ứng ngay lập tức ... "giải pháp" của ông ta đối với "vấn đề" này là ném vào truy vấn từ khóa DISTINCT và POOF,  tất cả các rắc rối của ông biến mất.
+> Theo quan điểm của tôi về nơi mọi thứ bắt đầu trở nên tồi tệ là khi 1 developer đang xây dựng lượng truy vấn đáng kể, join các bảng với nhau và đột nhiên anh ta nhận ra rằng nó **có vẻ** như anh ta đang lấy ra những hàng trùng lặp và ngay lập tức nghĩ ra giải pháp cho vấn đề này thông qua từ khóa DISTINCT và **Đá phăng** tất cả những rắc rối kia.
 
 **5. Sử dụng các lệnh kết hợp lại thay vì lệnh join**
 
 Một sai lầm phổ biến khác của các nhà phát triển ứng dụng cơ sở dữ liệu là không nhận ra các lệnh kết hợp với nhau sẽ tiêu tốn hơn so với các lệnh join (ví dụ Mệnh đề GROUP BY) khi đem so sánh với nhau.
 
-Để cho bạn thấy được vấn đề này phổ biến như nào, tôi đã từng đề cập vấn đề này một vài lần trong các bài viết dưới đây và được downvoted rất nhiều. Ví dụ:
+Để cho bạn một ý tưởng về sức lan tỏa của nó, Tôi đã viết về chủ đề này rất nhiều lần và rất nhiều đã bị downvote. Ví dụ như:
+[Câu lệnh SQL - “join” vs “group by và having”](https://stackoverflow.com/questions/477006/sql-statement-join-vs-group-by-and-having/477013#477013)
 
 To give you an idea of how widespread this is, I've written on this topic several times here and been downvoted a lot for it. For example:
 
@@ -114,9 +111,9 @@ Và đột nhiên bạn có một cái nhìn rất đơn giản về dữ liệu
 
 **7. Không lọc đầu vào**
 
-Đây là một lỗi lớn. Bây giờ tôi thích PHP nhưng nếu bạn không biết bạn đang làm gì thì thật sự dễ để tạo các trang web dễ bị tấn công. Việc tổng hợp lỗi này được thông kế đầy đủ trong [story of little Bobby Tables](http://xkcd.com/327/).
+Đây là một trong những lỗi lớn. Bây giờ tôi thích PHP nhưng nếu bạn không biết bạn đang làm cái gì thì thật dễ để tạo ra một tang web dễ bị tấn công. Không có gì có thể tổng kết tốt hơn so với [story of little Bobby Tables](http://xkcd.com/327/).
 
-Dữ liệu cấp bởi người dùng thông qua URL, form và **cookie** nên sẽ luôn luôn bị xem là dễ bị tấn công và lọc nhất. 
+Dữ liệu được cung cấp bở người dùng bằng URLs, dữ liệu form **và các Cookie** nên luôn luôn được coi là kẻ thù và cần được thanh lọc. Đảm bảo rằng bạn đang lấy những gì bạn muốn.
 
 Data provided by the user by way of URLs, form data **and cookies** should always be treated as hostile and sanitized. Đảm bảo bạn đang nhận được những gì bạn muốn.
 
@@ -134,11 +131,11 @@ hoặc
 
 SELECT * FROM users WHERE username = :username
 
-phụ thuộc vào nền tảng của bạn.
+tùy thuộc vào hệ thống của bạn.
 
-Tôi đã nhìn thấy cơ sở dữ liệu mang đến đầu gối của họ bằng cách làm điều này . Về cơ bản, mỗi khi cơ sở dữ liệu hiện đại gặp một truy vấn mới, nó phải biên dịch nó. Nếu nó gặp một truy vấn nó được nhìn thấy trước, bạn đang tạo cho cơ sở dữ liệu có thể cache truy vấn đã biên dịch và dự định có thể thực thi. Bằng cách thực hiện các truy vấn `nhieeuf` nhiều bạn đang giúp cơ sở dữ liệu có thể tính toán và tối ưu hóa cho phù hợp (ví dụ, bằng cách ghim các truy vấn đã được biên dịch trong bộ nhớ) 
+Tôi đã nhìn thấy những cơ sở dữ liệu dài đến tận đầu gối của khi họ làm cách này. Về cơ bản, mỗi khi cơ sở dữ liệu hiện đại gặp một truy vấn mới, nó phải biên dịch nó. Nếu nó gặp một truy vấn nó được nhìn thấy trước, bạn đang cho cơ sở dữ liệu cơ hội để cache truy vấn biên dịch và kế hoạch thực hiện. Bằng cách thực hiện các truy vấn rất nhiều bạn đang cho cơ sở dữ liệu cơ hội để trưng bày ra và tối ưu hóa cho phù hợp (ví dụ, bằng cách ghim các truy vấn biên dịch trong bộ nhớ).
 
-Sử dụng các câu lệnh được lấy sẵn cũng sẽ cung cấp cho bạn số liệu thống kê có ý nghĩa về tần suất các truy vấn được sử dụng.
+Sử dụng các câu lệnh có sẵn cũng sẽ cung cấp cho bạn số liệu thống kê có ý nghĩa về tần suất các truy vấn nhất định được sử dụng.
 
 Các lệnh được lấy sẵn cũng sẽ bảo vệ khỏi các tấn công SQL injection tốt hơn
 
